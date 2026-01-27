@@ -1,4 +1,4 @@
-from gpiozero import Robot, Motor
+from gpiozero import DigitalOutputDevice, PWMOutputDevice
 from gpiozero.pins.pigpio import PiGPIOFactory
 import time
 import sys
@@ -14,26 +14,41 @@ if __name__ == "__main__":
     else:
         raise Exception("Didn't input appropriate variables")
 
-# pin definitions (BCM numbering)
-IN1 = 27
-IN2 = 22
-ENA = 18
-
-IN3 = 23
-IN4 = 24
-ENB = 19
-
 # use pigpio for hardware PWM backend
 factory = PiGPIOFactory()
-pi = factory._connection
-pi.set_PWM_frequency(ENA, pwm_freq)
-pi.set_PWM_frequency(ENB, pwm_freq)
 
-robot = Robot(
-    left=Motor(forward=IN3, backward=IN4, enable=ENB, pin_factory=factory),
-    right=Motor(forward=IN1, backward=IN2, enable=ENA, pin_factory=factory),
-    pin_factory=factory
-)
+# pin definitions (BCM numbering)
+IN1 = DigitalOutputDevice(27, pin_factory=factory)
+IN2 = DigitalOutputDevice(22, pin_factory=factory)
+ENA = PWMOutputDevice(18, pin_factory=factory)
+
+IN3 = DigitalOutputDevice(23, pin_factory=factory)
+IN4 = DigitalOutputDevice(24, pin_factory=factory)
+ENB = PWMOutputDevice(19, pin_factory=factory)
+
+def forward(a, b, f):
+    ENA.frequency = ENB.frequency = f
+    if a > 0:
+        IN1.on()
+        IN2.off()
+    elif a < 0:
+        IN1.off()
+        IN2.on()
+    else: 
+        IN1.off()
+        IN2.off()
+    if b > 0:
+        IN3.on()
+        IN4.off()
+    elif b < 0:
+        IN3.off()
+        IN4.on()
+    else:
+        IN3.off()
+        IN4.off()
+
+        
+        
 
 def turn(speed, angle, dir):
     # time to complete one rev at max speed
@@ -48,5 +63,5 @@ def turn(speed, angle, dir):
 
 #turn(1, 360, "left")
 robot.value = (left_speed, right_speed)
-time.sleep(13)
+time.sleep(2)
 robot.stop()
