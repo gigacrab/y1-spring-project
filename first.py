@@ -23,6 +23,7 @@ factory = PiGPIOFactory()
 robot = Robot(
     left=Motor(forward=IN3, backward=IN4, enable=ENB, pin_factory=factory),
     right=Motor(forward=IN1, backward=IN2, enable=ENA, pin_factory=factory),
+    pin_factory=factory
 )
 
 def turn(speed, angle, dir):
