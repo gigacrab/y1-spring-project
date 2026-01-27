@@ -1,6 +1,6 @@
 from gpiozero import Robot, Motor
 from gpiozero.pins.pigpio import PiGPIOFactory
-from time import sleep
+import time
 
 # pin definitions (BCM numbering)
 IN1 = "BCM27"
@@ -20,9 +20,16 @@ robot = Robot(
     pin_factory=factory
 )
 
-def turn():
-    pass
+def turn(speed, angle, dir):
+    # time to complete one rev at max speed
+    t = 1.5
+    turn_time = (1 / speed) * t * (angle / 360)
+    if (dir.lower() == "left"):
+        robot.left(speed=speed)
+    else:
+        robot.right(speed=speed)
+    time.sleep(turn_time)
+    robot.stop()
 
-robot.forward(speed=0.5)
-sleep(1)
-robot.forward(0)
+turn(1, 360, "left")
+robot.forward(1)
