@@ -19,15 +19,15 @@ if __name__ == "__main__":
         raise Exception("Didn't input appropriate variables")
 
 # use pigpio for hardware PWM backend
-factory = PiGPIOFactory()
+#factory = PiGPIOFactory()
 
 # pin definitions (BCM numbering)
-IN1 = DigitalOutputDevice(27, pin_factory=factory)
-IN2 = DigitalOutputDevice(22, pin_factory=factory)
+IN1 = DigitalOutputDevice(27)
+IN2 = DigitalOutputDevice(22)
 ENA = PWMOutputDevice(18)
 
-IN3 = DigitalOutputDevice(23, pin_factory=factory)
-IN4 = DigitalOutputDevice(24, pin_factory=factory)
+IN3 = DigitalOutputDevice(23)
+IN4 = DigitalOutputDevice(24)
 ENB = PWMOutputDevice(19)
 ENA.frequency = pwm_freq
 ENB.frequency = pwm_freq
