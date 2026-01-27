@@ -17,14 +17,16 @@ factory = PiGPIOFactory()
 left_motor = Motor(
     forward=IN1,
     backward=IN2,
-    pwm=ENA,
+    enable=ENA,
+    pwm=True,
     pin_factory=factory
 )
 
 right_motor = Motor(
     forward=IN3,
     backward=IN4,
-    pwm=ENB,
+    enable=ENB,
+    pwm=True,
     pin_factory=factory
 )
 
