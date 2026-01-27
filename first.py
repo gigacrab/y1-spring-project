@@ -26,8 +26,8 @@ ENB = 19
 # use pigpio for hardware PWM backend
 factory = PiGPIOFactory()
 pi = factory._connection
-pi.set_PWM_frequency(18, pwm_freq)
-pi.set_PWM_frequency(19, pwm_freq)
+pi.set_PWM_frequency(ENA, pwm_freq)
+pi.set_PWM_frequency(ENB, pwm_freq)
 
 robot = Robot(
     left=Motor(forward=IN3, backward=IN4, enable=ENB, pin_factory=factory),
