@@ -38,4 +38,4 @@ def turn(speed, angle, dir):
     robot.stop()
 
 #turn(1, 360, "left")
-robot.forward(input_speed)
+robot.forward(speed=input_speed)
