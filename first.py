@@ -1,6 +1,12 @@
 from gpiozero import Robot, Motor
 from gpiozero.pins.pigpio import PiGPIOFactory
 import time
+import sys
+
+input_speed = 1
+if __name__ == "__main__":
+    if len(sys.argv) > 1:
+        input_speed = sys.argv[1]
 
 # pin definitions (BCM numbering)
 IN1 = "BCM27"
@@ -31,4 +37,5 @@ def turn(speed, angle, dir):
     time.sleep(turn_time)
     robot.stop()
 
-turn(1, 360, "left")
+#turn(1, 360, "left")
+robot.forward(speed)
