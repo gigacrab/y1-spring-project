@@ -6,7 +6,7 @@ import sys
 input_speed = 1
 if __name__ == "__main__":
     if len(sys.argv) > 1:
-        input_speed = sys.argv[1]
+        input_speed = float(sys.argv[1])
 
 # pin definitions (BCM numbering)
 IN1 = "BCM27"
