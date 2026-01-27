@@ -5,6 +5,10 @@ import sys
 
 pwm_freq = 800
 
+# time to complete one rev at max speed
+T_360 = 1.5
+
+# __main__ is the script that was passed to execute
 if __name__ == "__main__":
     if len(sys.argv) > 2:
         left_speed = float(sys.argv[1])
@@ -26,8 +30,9 @@ IN3 = DigitalOutputDevice(23, pin_factory=factory)
 IN4 = DigitalOutputDevice(24, pin_factory=factory)
 ENB = PWMOutputDevice(19, pin_factory=factory)
 
-def forward(a, b, f):
+def move(a, b, f):
     ENA.frequency = ENB.frequency = f
+    ENA.value, ENB.value = a, b
     if a > 0:
         IN1.on()
         IN2.off()
@@ -46,22 +51,16 @@ def forward(a, b, f):
     else:
         IN3.off()
         IN4.off()
-
         
-        
-
 def turn(speed, angle, dir):
-    # time to complete one rev at max speed
-    t = 1.5
-    turn_time = (1 / speed) * t * (angle / 360)
+    turn_time = (1 / speed) * T_360 * (angle / 360)
     if (dir.lower() == "left"):
-        robot.left(speed=speed)
+        move(-left_speed, -right_speed, pwm_freq)
     else:   
-        robot.right(speed=speed)
+        move(left_speed, -right_speed, pwm_freq)
     time.sleep(turn_time)
-    robot.stop()
+    move(0, 0, pwm_freq)
 
-#turn(1, 360, "left")
-robot.value = (left_speed, right_speed)
-time.sleep(2)
-robot.stop()
+move(left_speed, right_speed, pwm_freq)
+time.sleep(13)
+move(0, 0, pwm_freq)
