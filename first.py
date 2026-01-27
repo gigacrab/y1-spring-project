@@ -46,4 +46,4 @@ def turn(speed, angle, dir):
     robot.stop()
 
 #turn(1, 360, "left")
-robot.value(left_speed, right_speed)
+robot.value = (left_speed, right_speed)
