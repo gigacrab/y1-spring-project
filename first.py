@@ -32,4 +32,3 @@ def turn(speed, angle, dir):
     robot.stop()
 
 turn(1, 360, "left")
-robot.forward(1)
