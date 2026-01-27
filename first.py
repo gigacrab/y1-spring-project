@@ -37,6 +37,6 @@ robot = Robot(
 )
 
 # Move forward at 50% speed
-while True:
-    robot.forward(0.5)
-    sleep(1)
+robot.forward(0.5)
+sleep(1)
+robot.forward(0)
