@@ -10,7 +10,7 @@ if __name__ == "__main__":
         left_speed = float(sys.argv[1])
         right_speed = float(sys.argv[2])
         if len(sys.argv) == 4:
-            pwm_freq = float(sys.argv[3])
+            pwm_freq = int(sys.argv[3])
     else:
         raise Exception("Didn't input appropriate variables")
 
