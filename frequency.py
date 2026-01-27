@@ -1,5 +1,6 @@
 from gpiozero import DigitalOutputDevice, PWMOutputDevice
 from gpiozero.pins.pigpio import PiGPIOFactory
+import pigpio
 import time
 import sys
 
@@ -18,6 +19,7 @@ if __name__ == "__main__":
     else:
         raise Exception("Didn't input appropriate variables")
 
+pi = pigpio.pi()
 # use pigpio for hardware PWM backend
 factory = PiGPIOFactory()
 
@@ -31,8 +33,10 @@ IN4 = DigitalOutputDevice(24, pin_factory=factory)
 ENB = PWMOutputDevice(19, pin_factory=factory)
 
 def move(a, b, f):
-    ENA.frequency = ENB.frequency = f
-    ENA.value, ENB.value = a, b
+    pi.set_PWM_frequency(ENA, f)
+    pi.set_PWM_frequency(ENB, f)
+    pi.set_PWM_dutycycle(ENA, int(abs(a) * 255))
+    pi.set_PWM_dutycycle(ENB, int(abs(b) * 255))
     if a > 0:
         IN1.on()
         IN2.off()
@@ -62,5 +66,5 @@ def turn(speed, angle, dir):
     move(0, 0, pwm_freq)
 
 move(left_speed, right_speed, pwm_freq)
-time.sleep(13)
+time.sleep(10)
 move(0, 0, pwm_freq)
