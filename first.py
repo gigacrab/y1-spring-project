@@ -3,22 +3,30 @@ from gpiozero.pins.pigpio import PiGPIOFactory
 import time
 import sys
 
-input_speed = 1
+pwm_freq = 800
+
 if __name__ == "__main__":
-    if len(sys.argv) > 1:
-        input_speed = float(sys.argv[1])
+    if len(sys.argv) > 2:
+        left_speed = float(sys.argv[1])
+        right_speed = float(sys.argv[2])
+        if len(sys.argv) == 4:
+            pwm_freq = float(sys.argv[3])
+    else:
+        raise Exception("Didn't input appropriate variables")
 
 # pin definitions (BCM numbering)
-IN1 = "BCM27"
-IN2 = "BCM22"
-ENA = "BCM18"
+IN1 = 27
+IN2 = 22
+ENA = 18
 
-IN3 = "BCM23"
-IN4 = "BCM24"
-ENB = "BCM19"
+IN3 = 23
+IN4 = 24
+ENB = 19
 
 # use pigpio for hardware PWM backend
 factory = PiGPIOFactory()
+pi = factory._connection
+pi.set_PWM_frequency(18, pwm_freq)
 
 robot = Robot(
     left=Motor(forward=IN3, backward=IN4, enable=ENB, pin_factory=factory),
@@ -38,4 +46,4 @@ def turn(speed, angle, dir):
     robot.stop()
 
 #turn(1, 360, "left")
-robot.forward(speed=input_speed)
+robot.value(left_speed, right_speed)
