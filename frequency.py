@@ -26,15 +26,16 @@ factory = PiGPIOFactory()
 # pin definitions (BCM numbering)
 IN1 = DigitalOutputDevice(27, pin_factory=factory)
 IN2 = DigitalOutputDevice(22, pin_factory=factory)
-ENA = PWMOutputDevice(18, pin_factory=factory)
+ENA = 18#PWMOutputDevice(18, pin_factory=factory)
 
 IN3 = DigitalOutputDevice(23, pin_factory=factory)
 IN4 = DigitalOutputDevice(24, pin_factory=factory)
-ENB = PWMOutputDevice(19, pin_factory=factory)
+ENB = 19#PWMOutputDevice(19, pin_factory=factory)
+
+pi.set_PWM_frequency(ENA, pwm_freq)
+pi.set_PWM_frequency(ENB, pwm_freq)
 
 def move(a, b, f):
-    pi.set_PWM_frequency(ENA, f)
-    pi.set_PWM_frequency(ENB, f)
     pi.set_PWM_dutycycle(ENA, int(abs(a) * 255))
     pi.set_PWM_dutycycle(ENB, int(abs(b) * 255))
     if a > 0:
