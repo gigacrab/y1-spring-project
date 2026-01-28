@@ -50,7 +50,7 @@ def turn(T_360, a, b, angle, dir):
     turn_time = (0.79 / speed) * T_360 * (angle / 360)
     print(f"The turn time is: {turn_time}")
     if (dir.lower() == "l"):
-        move(-a, -b)
+        move(-a, b)
     else:   
         move(a, -b)
     time.sleep(turn_time)
