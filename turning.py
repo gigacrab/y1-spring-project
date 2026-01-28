@@ -12,12 +12,13 @@ IN3, IN4, ENB = 23, 24, 19
 
 # __main__ is the script that was passed to execute
 if __name__ == "__main__":
-    if len(sys.argv) == 6:
-        T_360 = float(sys.argv[1])
-        left_speed = float(sys.argv[2])
-        right_speed = float(sys.argv[3])
-        dir = sys.argv[4]
-        angle = float(sys.argv[5])
+    if len(sys.argv) >= 5:
+        left_speed = float(sys.argv[1])
+        right_speed = float(sys.argv[2])
+        dir = sys.argv[3]
+        angle = float(sys.argv[4])
+        if len(sys.argv) == 6:
+            T_360 = float(sys.argv[5])
     else:
         raise Exception("Didn't input appropriate variables")
 
@@ -47,6 +48,7 @@ def move(a, b):
 def turn(T_360, a, b, angle, dir):
     speed = (a + b) / 2
     turn_time = (0.79 / speed) * T_360 * (angle / 360)
+    print(f"The turn time is: {turn_time}")
     if (dir.lower() == "l"):
         move(-a, -b)
     else:   
