@@ -32,6 +32,8 @@ pi.set_mode(ENB, pigpio.OUTPUT)
 
 pi.set_PWM_frequency(ENA, pwm_freq)
 pi.set_PWM_frequency(ENB, pwm_freq)
+print(f"ENA frequency: {pi.get_PWM_frequency(ENA)}")
+print(f"ENB frequency: {pi.get_PWM_frequency(ENB)}")
 
 def move(a, b, f):
     pi.write(IN1, a > 0)
@@ -49,5 +51,9 @@ def turn(speed, angle, dir):
         move(left_speed, -right_speed, pwm_freq)
     time.sleep(turn_time)
     move(0, 0, pwm_freq)
-
-move(left_speed, right_speed, pwm_freq)
+try:
+    move(left_speed, right_speed, pwm_freq)
+    while True:
+        pass
+finally:
+    pi.stop()
