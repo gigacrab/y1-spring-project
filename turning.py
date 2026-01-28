@@ -2,22 +2,22 @@ import pigpio
 import time
 import sys
 
-pwm_freq = 800
+pwm_freq = 100
 
 # time to complete one rev at max speed
-T_360 = 1.5
+T_360 = 1.21
 
 IN1, IN2, ENA = 27, 22, 18
 IN3, IN4, ENB = 23, 24, 19
 
 # __main__ is the script that was passed to execute
 if __name__ == "__main__":
-    if len(sys.argv) == 5:
+    if len(sys.argv) == 6:
         T_360 = float(sys.argv[1])
         left_speed = float(sys.argv[2])
         right_speed = float(sys.argv[3])
         dir = sys.argv[4]
-        T_360 = float(sys.argv[5])
+        angle = float(sys.argv[5])
     else:
         raise Exception("Didn't input appropriate variables")
 
@@ -36,7 +36,7 @@ pi.set_PWM_frequency(ENB, pwm_freq)
 print(f"ENA frequency: {pi.get_PWM_frequency(ENA)}")
 print(f"ENB frequency: {pi.get_PWM_frequency(ENB)}")
 
-def move(a, b, f):
+def move(a, b):
     pi.write(IN1, a > 0)
     pi.write(IN2, a < 0)
     pi.write(IN3, b > 0)
@@ -44,19 +44,20 @@ def move(a, b, f):
     pi.set_PWM_dutycycle(ENA, int(abs(a) * 255))
     pi.set_PWM_dutycycle(ENB, int(abs(b) * 255))
         
-def turn(speed, angle, dir):
+def turn(T_360, a, b, angle, dir):
+    speed = (a + b) / 2
     turn_time = (1 / speed) * T_360 * (angle / 360)
-    if (dir.lower() == "left"):
-        move(-left_speed, -right_speed, pwm_freq)
+    if (dir.lower() == "l"):
+        move(-a, -b)
     else:   
-        move(left_speed, -right_speed, pwm_freq)
+        move(a, -b)
     time.sleep(turn_time)
     move(0, 0, pwm_freq)
 
 start_time = time.perf_counter()
 
 try:
-    turn()
+    turn(T_360, left_speed, right_speed, angle, dir)
 except KeyboardInterrupt:
     print("It's stopped")
     move(0, 0, pwm_freq)
