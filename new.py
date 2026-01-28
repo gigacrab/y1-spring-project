@@ -55,5 +55,6 @@ try:
     move(left_speed, right_speed, pwm_freq)
     while True:
         pass
-finally:
+except KeyboardInterrupt:
+    print("It's stopped")
     pi.stop()
