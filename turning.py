@@ -6,6 +6,7 @@ pwm_freq = 100
 
 # time to complete one rev at max speed
 T_360 = 1.7
+offset = 0.1
 
 IN1, IN2, ENA = 27, 22, 18
 IN3, IN4, ENB = 23, 24, 19
@@ -45,9 +46,9 @@ def move(a, b):
     pi.set_PWM_dutycycle(ENA, int(abs(a) * 255))
     pi.set_PWM_dutycycle(ENB, int(abs(b) * 255))
         
-def turn(T_360, a, b, angle, dir):
+def turn(T_360, a, b, angle, dir, offset):
     speed = (a + b) / 2
-    turn_time = (0.79 / speed) * T_360 * (angle / 360)
+    turn_time = (0.79 / speed) * T_360 * (angle / 360) + offset
     print(f"The turn time is: {turn_time}")
     if (dir.lower() == "l"):
         move(-a, b)
@@ -59,7 +60,7 @@ def turn(T_360, a, b, angle, dir):
 start_time = time.perf_counter()
 
 try:
-    turn(T_360, left_speed, right_speed, angle, dir)
+    turn(T_360, left_speed, right_speed, angle, dir, offset)
 except KeyboardInterrupt:
     print("It's stopped")
     move(0, 0, pwm_freq)
