@@ -57,4 +57,5 @@ try:
         pass
 except KeyboardInterrupt:
     print("It's stopped")
+    move(0, 0, pwm_freq)
     pi.stop()
