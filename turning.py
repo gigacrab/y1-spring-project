@@ -54,7 +54,7 @@ def turn(T_360, a, b, angle, dir):
     else:   
         move(a, -b)
     time.sleep(turn_time)
-    move(0, 0, pwm_freq)
+    move(0, 0)
 
 start_time = time.perf_counter()
 
