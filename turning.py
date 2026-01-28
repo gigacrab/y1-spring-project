@@ -13,13 +13,14 @@ IN3, IN4, ENB = 23, 24, 19
 
 # __main__ is the script that was passed to execute
 if __name__ == "__main__":
-    if len(sys.argv) >= 5:
+    if len(sys.argv) >= 6:
         left_speed = float(sys.argv[1])
         right_speed = float(sys.argv[2])
         dir = sys.argv[3]
         angle = float(sys.argv[4])
-        if len(sys.argv) == 6:
-            T_360 = float(sys.argv[5])
+        offset = float(sys.argv[5])
+        if len(sys.argv) == 7:
+            T_360 = float(sys.argv[6])
     else:
         raise Exception("Didn't input appropriate variables")
 
