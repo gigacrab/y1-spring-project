@@ -51,11 +51,16 @@ def turn(speed, angle, dir):
         move(left_speed, -right_speed, pwm_freq)
     time.sleep(turn_time)
     move(0, 0, pwm_freq)
+
+start_time = time.perf_counter()
+
 try:
     move(left_speed, right_speed, pwm_freq)
     while True:
         pass
 except KeyboardInterrupt:
+    end_time = time.perf_counter()
+    print(f"Time elapsed: {end_time - start_time}")
     print("It's stopped")
     move(0, 0, pwm_freq)
     pi.stop()
