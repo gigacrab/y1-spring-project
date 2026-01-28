@@ -46,7 +46,7 @@ def move(a, b):
         
 def turn(T_360, a, b, angle, dir):
     speed = (a + b) / 2
-    turn_time = (1 / speed) * T_360 * (angle / 360)
+    turn_time = (0.79 / speed) * T_360 * (angle / 360)
     if (dir.lower() == "l"):
         move(-a, -b)
     else:   
