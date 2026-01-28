@@ -5,7 +5,7 @@ import sys
 pwm_freq = 100
 
 # time to complete one rev at max speed
-T_360 = 1.21
+T_360 = 1.7
 
 IN1, IN2, ENA = 27, 22, 18
 IN3, IN4, ENB = 23, 24, 19
