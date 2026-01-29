@@ -52,6 +52,11 @@ def turn(speed, angle, dir):
     time.sleep(turn_time)
     move(0, 0, pwm_freq)
 
+def distance(left_dc, right_dc, time):
+    average_dc = (left_dc + right_dc) / 2 * 100
+    speed = 2.22 + (1.07 * average_dc) + (-4.42E-03 * (average_dc)**2)
+    return speed * time
+
 start_time = time.perf_counter()
 
 try:
@@ -60,7 +65,9 @@ try:
         pass
 except KeyboardInterrupt:
     end_time = time.perf_counter()
-    print(f"Time elapsed: {end_time - start_time}")
+    time_elapsed = end_time - start_time
+    print(f"Time elapsed: {time_elapsed}")
+    print(f"Distance travelled: {distance(left_speed, right_speed, time_elapsed)}")
     print("It's stopped")
     move(0, 0, pwm_freq)
     pi.stop()
