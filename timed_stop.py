@@ -12,11 +12,13 @@ IN3, IN4, ENB = 23, 24, 19
 
 # __main__ is the script that was passed to execute
 if __name__ == "__main__":
-    if len(sys.argv) > 2:
+    if len(sys.argv) > 3:
         left_speed = float(sys.argv[1])
         right_speed = float(sys.argv[2])
-        if len(sys.argv) == 4:
-            pwm_freq = int(sys.argv[3])
+        run_time = float(sys.argv[3])
+        if len(sys.argv) == 5:
+            pwm_freq = int(sys.argv[4])
+        
     else:
         raise Exception("Didn't input appropriate variables")
 
@@ -56,8 +58,11 @@ start_time = time.perf_counter()
 
 try:
     move(left_speed, right_speed, pwm_freq)
-    while True:
-        pass
+    time.sleep(run_time)
+    print(f"Time elapsed: {run_time}")
+    print("It's stopped")
+    move(0, 0, pwm_freq)
+    pi.stop()
 except KeyboardInterrupt:
     end_time = time.perf_counter()
     print(f"Time elapsed: {end_time - start_time}")
