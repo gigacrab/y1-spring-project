@@ -54,7 +54,7 @@ def turn(speed, angle, dir):
     time.sleep(turn_time)
     move(0, 0, pwm_freq)
 
-average_pwm = (left_speed + right_speed) / 2
+average_pwm = (left_speed + right_speed) / 2 * 100
 speed = 2.22 + (1.07 * average_pwm) + (-4.42E-03 * (average_pwm)**2)
 run_time = distance / speed
 
