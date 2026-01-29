@@ -56,7 +56,7 @@ def turn(speed, angle, dir):
 
 def distance(left_dc, right_dc, time):
     average_dc = (left_dc + right_dc) / 2 * 100
-    speed = 2.22 + (1.07 * average_dc) + (-4.42E-03 * (average_dc)**2)
+    speed = 2.22 + (1.07 * average_dc) + (-4.42E-03 * (average_dc)**2) / 1.1
     return speed * time
 
 start_time = time.perf_counter()
